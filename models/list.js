@@ -17,6 +17,10 @@ lng:{
     type:"number",
     parse:true
 },
+teslimDurumu:{
+    type:String,
+    parse:true
+},
 });
 
 module.exports= model('kargolist',schema) ;

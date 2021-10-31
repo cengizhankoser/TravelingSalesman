@@ -147,7 +147,7 @@ function initialize() {
 	const Liste = document.querySelector("#Liste");
 	const lat = document.querySelector( '#latitude' );
 	const lng = document.querySelector( '#longitude' );
-
+	const teslim = document.querySelector( '#teslim' );
 	const {ipcRenderer} = require('electron')
 	let lists = [];
 	ipcRenderer.invoke('get-list').then(()=> console.log('')).catch((err)=> console.error('Error'));
@@ -183,6 +183,7 @@ function initialize() {
 	   adres.value =k.address;
 	   lat.value= k.lat;
 	   lng.value=k.lng;
+	   teslim.value=k.teslimDurumu
 	   adres.focus()
 	  }
 
@@ -204,11 +205,13 @@ function initialize() {
 				  <th>KargoId</th>
 				  <th>MüşteriAdı</th> 
 				  <th>Adres</th>
+				  <th>TeslimDurumu</th> 
 				</tr>
 				<tr>
 		<td>${t._id}</td>
 		<td>${t.clientName}</td>
 		<td>${t.address}</td>
+		<td>${t.teslimDurumu}</td>
 	  <td>  <button onclick="edit('${t._id}')" />  ✎ Edit</td>
 	  <td>  <button onclick="deleteK('${t._id}')" /> 🗑 Delete</td>
 	  </tr>
@@ -239,7 +242,8 @@ function initialize() {
 		  clientName: c.value,
 		  address: adres.value,
 		  lat: lat.value,
-		  lng: lng.value
+		  lng: lng.value,
+		  teslimDurumu:teslim.value
 		};
 		if (!updateStatus) {
 			ipcRenderer.invoke('new-kargo', list).then(()=> console.log('new kargo')).catch((err)=> console.error('Error'));
@@ -277,6 +281,7 @@ function initialize() {
 			t.address = updatedkargo.address;
 			t.lat= updatedkargo.lat;
 			t.lng=updatedkargo.lng;
+			t.teslimDurumu=updatedkargo.teslimDurumu;
 		}
 		return t;
 	  });
@@ -290,6 +295,25 @@ function initialize() {
 		});
 	   lists = newLists;
 		renderList(lists);
-	taskForm.reset()
-	console.log("dd")
+
+
 	  });
+	
+	  ipcRenderer.on("teslim-durumu", (e, args) => {
+	
+		
+		const updated = JSON.parse(args);
+		console.log(updated._id)
+	lists = lists.map((t, i) => {
+		   
+		  if (t._id === updated._id) {
+		  
+			
+			t.teslimDurumu=updatedkargo.teslimDurumu;
+		}
+		return t;
+	  });
+	
+		renderList(lists);
+
+	});

@@ -81,8 +81,9 @@ function initMap() {
         }))
         async function deleteVisited(shortestpath,locationCount){
             for (var i = 0; i < locationCount; i++) {
-                await sleep(5000);
+                await sleep(15000);
                 showRoute(shortestpath[i],shortestpath[locationCount - 1],shortestpath.slice(i+1,locationCount-1),locationCount-(i+1))
+                ipcRenderer.invoke('teslim',shortestpath[i]).then(() => console.log('')).catch((err) => console.error('Error'));
             }
         }
         //  var start = '40.765470, 29.940592';
