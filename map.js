@@ -77,7 +77,14 @@ function initMap() {
         }
         createMatrix(distanceCenter, distanceMatrix, locationCoordinates, locationCount).then(matrix => shortestPath(locationCoordinates, locationCount, start, matrix).then(shortestpath => {
             showRoute(start, shortestpath[locationCount - 1], shortestpath, locationCount);
+            deleteVisited(shortestpath,locationCount)
         }))
+        async function deleteVisited(shortestpath,locationCount){
+            for (var i = 0; i < locationCount; i++) {
+                await sleep(5000);
+                showRoute(shortestpath[i],shortestpath[locationCount - 1],shortestpath.slice(i+1,locationCount-1),locationCount-(i+1))
+            }
+        }
         //  var start = '40.765470, 29.940592';
         //  var end = '40.76124439803489, 29.9436904870682';
         /**
@@ -116,14 +123,14 @@ function initMap() {
                     }
                     console.log("DISTANCE", distance);
                     directionsDisplay.setDirections(response);
-                    let starter = new google.maps.Marker({
+                    /* let starter = new google.maps.Marker({
                         position: start,
                         map: map
                     })
                     let marker = new google.maps.Marker({
                         position: destination,
                         map: map
-                    })
+                    }) */
                 }
             })
         }
