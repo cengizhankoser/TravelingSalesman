@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ui/list.css" />
+    <title>List</title>
+    <style>
+      #map {
+          height: 600px;
+          width: 100%;
+      }
+  </style>
+</head>
+<body>
+    <h2>Kargo Yönetim Sistemi</h2>
+    
+    <form id="taskForm" class="card">
+        
+      <label >Müşteri : </label><br>
+      <select name="client" id="client" >
+        <option >    </option>  
+       
+    </select>
+    <a href="client.html">Add New Client</a>
+    <br><br>
+ <label for="">Address: <input id="map-search"  placeholder="Search Box" size="104"></label><br>
+ <label for="">Lat: <input id="latitude" type="text" class="latitude"></label>
+ <label for="">Long: <input id="longitude" type="text" class="longitude"></label>
+    <button type="submit" id="s" >Kargo Ekle
+    </button>
+  </form>
+
+
+  <div id="map"></div>
+  
+    <script    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAn1m17AAhjM7pKbqe3lFNyqwZpuqMLUh4&libraries=places&callback=initialize"
+    async    ></script>
+            <h2>Kargo List</h2>
+         
+    <div>
+      <ol id="Liste"></ol>
+     
+    </div>
+    
+           
+            <script src="kargolist.js"></script>
+
+  
+</body>
+</html>
